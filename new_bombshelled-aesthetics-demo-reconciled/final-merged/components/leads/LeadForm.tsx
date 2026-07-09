@@ -7,7 +7,7 @@ import type { Lead, ProcedureCategory, SurgicalInterest, NonSurgicalInterest, Sp
 const SURGICAL_INTERESTS: SurgicalInterest[] = [
   'breast-augmentation', 'breast-lift', 'breast-reduction', 'breast-revision',
   'tummy-tuck', 'liposuction', 'bbl', 'facelift', 'eyelid-surgery',
-  'rhinoplasty', 'body-contouring', 'other-surgical',
+  'rhinoplasty', 'body-contouring', 'revision-surgery', 'other-surgical',
 ];
 
 const NON_SURGICAL_INTERESTS: NonSurgicalInterest[] = [
@@ -15,6 +15,8 @@ const NON_SURGICAL_INTERESTS: NonSurgicalInterest[] = [
 ];
 
 function formatInterestLabel(interest: string): string {
+  if (interest === 'bbl') return 'BBL';
+
   return interest
     .split('-')
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
@@ -151,7 +153,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Jane Doe"
-            className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           />
         </div>
 
@@ -161,7 +163,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="(214) 555-0000"
-            className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           />
         </div>
 
@@ -171,7 +173,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="jane@email.com"
-            className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           />
         </div>
 
@@ -180,7 +182,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
           <select
             value={procedureCategory}
             onChange={(e) => handleProcedureCategoryChange(e.target.value as ProcedureCategory | "")}
-            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           >
             <option value="">Select...</option>
             <option value="surgical">Surgical</option>
@@ -194,7 +196,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
             value={specificInterest}
             onChange={(e) => setSpecificInterest(e.target.value as SpecificInterest | "")}
             disabled={!procedureCategory}
-            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20 disabled:bg-neutral-50 disabled:text-neutral-400"
+            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20 disabled:bg-neutral-50 disabled:text-neutral-400"
           >
             <option value="">Select...</option>
             {getValidInterests().map((interest) => (
@@ -210,7 +212,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
           <select
             value={timeline}
             onChange={(e) => setTimeline(e.target.value as "ready-to-book" | "exploring" | "just-researching" | "")}
-            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           >
             <option value="">Select...</option>
             <option value="ready-to-book">Ready to book</option>
@@ -224,7 +226,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
           <select
             value={patientLocation}
             onChange={(e) => setPatientLocation(e.target.value as "local" | "out-of-town" | "")}
-            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           >
             <option value="">Select...</option>
             <option value="local">Local (Frisco area)</option>
@@ -237,7 +239,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
           <select
             value={consultationPreference}
             onChange={(e) => setConsultationPreference(e.target.value as "in-person" | "virtual" | "")}
-            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           >
             <option value="">Select...</option>
             <option value="in-person">In-person</option>
@@ -253,7 +255,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
                 value={travelOriginCity}
                 onChange={(e) => setTravelOriginCity(e.target.value)}
                 placeholder="Dallas, TX"
-                className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+                className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -278,7 +280,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Anything else you'd like us to know?"
             rows={3}
-            className="w-full resize-y rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+            className="w-full resize-y rounded-lg border border-neutral-300 px-3 py-2.5 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
           />
         </div>
       </div>
@@ -286,7 +288,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
       <button
         type="submit"
         disabled={submitting}
-        className="mt-5 w-full rounded-lg bg-[#0B1120] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#171f33] disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-5 w-full rounded-lg bg-[#1C1710] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#2A2318] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? "Submitting..." : "Schedule a consultation →"}
       </button>

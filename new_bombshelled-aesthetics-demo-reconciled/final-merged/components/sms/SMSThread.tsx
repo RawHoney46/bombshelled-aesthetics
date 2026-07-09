@@ -75,17 +75,17 @@ export default function SMSThread({ leadId, leadName, leadPhone }: SMSThreadProp
 
   return (
     <div className="overflow-hidden rounded-xl border border-[#EEEBE5] bg-white">
-      <div className="flex items-center gap-3 bg-[#0B1120] px-4 py-3">
-        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#378ADD] to-[#1D9E75] text-base">
+      <div className="flex items-center gap-3 bg-[#1C1710] px-4 py-3">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#C4A15A] to-[#A8853F] text-base">
           🏠
         </div>
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-white">{leadName ?? "Lead"}</p>
-          <p className="truncate text-xs text-[#6B7A99]">{leadPhone ?? leadId}</p>
+          <p className="truncate text-xs text-[#9C8E76]">{leadPhone ?? leadId}</p>
         </div>
         <button
           onClick={loadLogs}
-          className="ml-auto flex-shrink-0 rounded-md px-2 py-1 text-xs text-[#6B7A99] transition hover:bg-white/10 hover:text-white"
+          className="ml-auto flex-shrink-0 rounded-md px-2 py-1 text-xs text-[#9C8E76] transition hover:bg-white/10 hover:text-white"
         >
           Refresh
         </button>
@@ -120,7 +120,7 @@ export default function SMSThread({ leadId, leadName, leadPhone }: SMSThreadProp
                 className={`mb-2.5 flex ${isOutbound ? "justify-end" : "justify-start"}`}
               >
                 {!isOutbound && (
-                  <div className="mr-2 flex h-7 w-7 flex-shrink-0 items-end items-center justify-center self-end rounded-full bg-gradient-to-br from-[#378ADD] to-[#1D9E75] text-xs text-white">
+                  <div className="mr-2 flex h-7 w-7 flex-shrink-0 items-end items-center justify-center self-end rounded-full bg-gradient-to-br from-[#C4A15A] to-[#A8853F] text-xs text-white">
                     🏠
                   </div>
                 )}
@@ -128,7 +128,7 @@ export default function SMSThread({ leadId, leadName, leadPhone }: SMSThreadProp
                   <div
                     className={`rounded-2xl px-3 py-2 text-sm leading-relaxed ${
                       isOutbound
-                        ? "rounded-br-sm bg-[#0B1120] text-white"
+                        ? "rounded-br-sm bg-[#1C1710] text-white"
                         : "rounded-bl-sm bg-[#F0EDE8] text-neutral-800"
                     }`}
                   >
@@ -156,12 +156,12 @@ export default function SMSThread({ leadId, leadName, leadPhone }: SMSThreadProp
             if (e.key === "Enter") handleSend();
           }}
           placeholder="Type a message..."
-          className="flex-1 rounded-full border border-neutral-300 px-3.5 py-2 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+          className="flex-1 rounded-full border border-neutral-300 px-3.5 py-2 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
         />
         <button
           onClick={handleSend}
           disabled={sending || !draft.trim()}
-          className="rounded-full bg-[#0B1120] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#171f33] disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-full bg-[#1C1710] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#2A2318] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {sending ? "..." : "Send"}
         </button>

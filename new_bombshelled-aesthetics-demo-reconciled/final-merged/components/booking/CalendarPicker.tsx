@@ -77,8 +77,8 @@ export default function CalendarPicker({ onSelect, selected, consultationType, o
             onClick={() => onConsultationTypeChange("in-person")}
             className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition ${
               consultationType === "in-person"
-                ? "border-[#378ADD] bg-[#E6F1FB] text-[#185FA5]"
-                : "border-neutral-200 bg-white text-neutral-700 hover:border-[#378ADD]"
+                ? "border-[#C4A15A] bg-[#F3EBDB] text-[#A8853F]"
+                : "border-neutral-200 bg-white text-neutral-700 hover:border-[#C4A15A]"
             }`}
           >
             In-person
@@ -88,8 +88,8 @@ export default function CalendarPicker({ onSelect, selected, consultationType, o
             onClick={() => onConsultationTypeChange("virtual")}
             className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition ${
               consultationType === "virtual"
-                ? "border-[#378ADD] bg-[#E6F1FB] text-[#185FA5]"
-                : "border-neutral-200 bg-white text-neutral-700 hover:border-[#378ADD]"
+                ? "border-[#C4A15A] bg-[#F3EBDB] text-[#A8853F]"
+                : "border-neutral-200 bg-white text-neutral-700 hover:border-[#C4A15A]"
             }`}
           >
             Virtual
@@ -109,8 +109,8 @@ export default function CalendarPicker({ onSelect, selected, consultationType, o
               !slot.available
                 ? "cursor-not-allowed border-neutral-200 bg-neutral-50 text-neutral-300"
                 : isSelected
-                ? "border-[#378ADD] bg-[#E6F1FB] text-[#185FA5] ring-2 ring-[#378ADD]/30"
-                : "border-neutral-200 bg-white text-neutral-700 hover:border-[#378ADD] hover:bg-[#F5FAFE]"
+                ? "border-[#C4A15A] bg-[#F3EBDB] text-[#A8853F] ring-2 ring-[#C4A15A]/30"
+                : "border-neutral-200 bg-white text-neutral-700 hover:border-[#C4A15A] hover:bg-[#FBF7EF]"
             }`}
           >
             <div className="font-medium">{formatDate(slot.date)}</div>

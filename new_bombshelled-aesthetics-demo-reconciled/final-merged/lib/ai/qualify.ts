@@ -251,6 +251,7 @@ function formatInterestLabel(interest: SpecificInterest | undefined): string {
     'eyelid-surgery': 'eyelid surgery',
     rhinoplasty: 'rhinoplasty',
     'body-contouring': 'body contouring',
+    'revision-surgery': 'revision of a previous procedure',
     'other-surgical': 'a surgical procedure (not yet specified)',
     filler: 'filler',
     microdermabrasion: 'microdermabrasion',

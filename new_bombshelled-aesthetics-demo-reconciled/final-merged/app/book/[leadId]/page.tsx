@@ -113,7 +113,7 @@ export default function BookLeadPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2]">
+    <main className="min-h-screen bg-[#F7F3EC]">
       <div className="flex items-center gap-3 border-b border-[#F0EDE8] bg-[#FAFAF8] px-6 py-4">
         <button
           onClick={() => router.push("/dashboard")}
@@ -123,7 +123,7 @@ export default function BookLeadPage() {
           ←
         </button>
         <div>
-          <h1 className="text-lg font-bold text-neutral-900">Book appointment</h1>
+          <h1 className="text-lg font-bold text-neutral-900 [font-family:var(--font-playfair)]">Book appointment</h1>
           {lead && <p className="text-sm text-neutral-500">{lead.name}</p>}
         </div>
         {lead && (
@@ -198,7 +198,7 @@ export default function BookLeadPage() {
                 </div>
               </div>
               {lead.patient_location === "out-of-town" && (
-                <div className="mt-3 rounded-lg bg-[#F5FAFE] px-3 py-2 text-sm text-neutral-700">
+                <div className="mt-3 rounded-lg bg-[#F3EBDB] px-3 py-2 text-sm text-neutral-700">
                   📍 <span className="font-medium">Out of town</span>
                   {lead.travel_origin_city && <span className="text-neutral-600"> from {lead.travel_origin_city}</span>}
                   {lead.needs_travel_logistics === 1 && <div className="mt-1 text-xs text-neutral-600">Needs travel arrangements</div>}
@@ -226,7 +226,7 @@ export default function BookLeadPage() {
                 </p>
                 <button
                   onClick={() => router.push("/dashboard")}
-                  className="mt-4 rounded-lg bg-[#0B1120] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#171f33]"
+                  className="mt-4 rounded-lg bg-[#1C1710] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#2A2318]"
                 >
                   Back to dashboard
                 </button>
@@ -250,7 +250,7 @@ export default function BookLeadPage() {
                 <button
                   onClick={handleConfirm}
                   disabled={!selectedSlot || !consultationType || booking}
-                  className="mt-4 w-full rounded-lg bg-[#0B1120] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#171f33] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="mt-4 w-full rounded-lg bg-[#1C1710] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#2A2318] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {booking ? "Booking..." : "Confirm appointment"}
                 </button>

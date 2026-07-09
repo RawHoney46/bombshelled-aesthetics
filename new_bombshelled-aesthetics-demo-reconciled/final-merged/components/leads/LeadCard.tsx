@@ -7,7 +7,7 @@ interface LeadCardProps {
 }
 
 const STATUS_STYLES: Record<"new" | "qualified" | "qualifying" | "booked" | "lost", { bg: string; text: string; dot: string; label: string }> = {
-  new: { bg: "bg-[#E6F1FB]", text: "text-[#185FA5]", dot: "bg-[#378ADD]", label: "New" },
+  new: { bg: "bg-[#E6F1FB]", text: "text-[#185FA5]", dot: "bg-[#388BDE]", label: "New" },
   qualifying: { bg: "bg-[#F0F0F0]", text: "text-[#666666]", dot: "bg-[#999999]", label: "Qualifying" },
   qualified: { bg: "bg-[#FAEEDA]", text: "text-[#854F0B]", dot: "bg-[#EF9F27]", label: "Qualified" },
   booked: { bg: "bg-[#EAF3DE]", text: "text-[#3B6D11]", dot: "bg-[#639922]", label: "Booked" },

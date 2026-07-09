@@ -3,7 +3,7 @@ export type ProcedureCategory = 'surgical' | 'non-surgical'
 export type SurgicalInterest =
   | 'breast-augmentation' | 'breast-lift' | 'breast-reduction' | 'breast-revision'
   | 'tummy-tuck' | 'liposuction' | 'bbl' | 'facelift' | 'eyelid-surgery'
-  | 'rhinoplasty' | 'body-contouring' | 'other-surgical'
+  | 'rhinoplasty' | 'body-contouring' | 'revision-surgery' | 'other-surgical'
 
 export type NonSurgicalInterest =
   | 'filler' | 'microdermabrasion' | 'skin-rejuvenation' | 'other-nonsurgical'

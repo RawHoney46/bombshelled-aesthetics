@@ -20,8 +20,8 @@
 // team only. It has no clinical meaning and must never be presented as a
 // suitability or medical judgment.
 //
-// Total possible: 40 (timeline) + 30 (procedure specificity) +
-// 10 (notes) + 10 (email) + 10 (out-of-town) = 100. We still keep the
+// Total possible: 45 (timeline) + 30 (procedure specificity) +
+// 10 (notes) + 10 (email) + 5 (out-of-town) = 100. We still keep the
 // defensive Math.min(100, score) cap below in case factors are added later.
 
 import type { Lead } from '@/types';
@@ -41,7 +41,7 @@ export function scoreLead(lead: Partial<Lead>): number {
   // If the value doesn't match one of these three, we award 0 points.
   switch (lead.timeline) {
     case 'ready-to-book':
-      score += 40;
+      score += 45;
       break;
     case 'exploring':
       score += 25;
@@ -83,7 +83,7 @@ export function scoreLead(lead: Partial<Lead>): number {
   // in a notes field (Rule 5).
   if (lead.notes && lead.notes.trim().length > 0) score += 10;
   if (lead.email && lead.email.trim().length > 0) score += 10;
-  if (lead.patient_location === 'out-of-town') score += 10;
+  if (lead.patient_location === 'out-of-town') score += 5;
 
   // `consultation_preference` carries no scoring weight — it's a
   // logistics detail (in-person vs. virtual), not a signal of intent.

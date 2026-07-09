@@ -19,8 +19,8 @@ function NavItem({ icon, label, active }: { icon: string; label: string; active?
     <button
       className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm transition ${
         active
-          ? "bg-[#378ADD]/15 font-semibold text-[#66AAEE]"
-          : "text-[#8899BB] hover:bg-white/5"
+          ? "bg-[#C4A15A]/15 font-semibold text-[#C4A15A]"
+          : "text-[#A89B80] hover:bg-white/5"
       }`}
     >
       <span className="text-base">{icon}</span>
@@ -73,17 +73,17 @@ export default function DashboardPage() {
   }, [leads]);
 
   return (
-    <div className="flex min-h-screen bg-[#F7F6F2]">
+    <div className="flex min-h-screen bg-[#F7F3EC]">
       {/* Sidebar */}
-      <aside className="flex w-56 flex-shrink-0 flex-col bg-[#0B1120]">
+      <aside className="flex w-56 flex-shrink-0 flex-col bg-[#1C1710]">
         <div className="border-b border-white/10 px-5 py-5">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#378ADD] to-[#1D9E75] text-base">
-              ✨
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#C4A15A] text-base font-bold text-[#C4A15A] [font-family:var(--font-playfair)]">
+              B
             </div>
             <div>
-              <p className="text-[13px] font-bold text-white">Bombshelled</p>
-              <p className="text-[11px] text-[#6B7A99]">Aesthetics · Lead AI</p>
+              <p className="text-[13px] font-bold text-[#C4A15A]">Bombshelled</p>
+              <p className="text-[11px] text-[#9C8E76]">Aesthetics · Lead AI</p>
             </div>
           </div>
         </div>
@@ -93,12 +93,15 @@ export default function DashboardPage() {
           <NavItem icon="◎" label="Settings" />
         </nav>
         <div className="p-3">
-          <div className="rounded-lg border border-[#378ADD]/20 bg-[#378ADD]/10 px-3 py-2.5">
-            <p className="text-xs font-semibold text-[#66AAEE]">⚡ AI active</p>
-            <p className="mt-1 text-[11px] text-[#6B7A99]">
+          <div className="rounded-lg border border-[#C4A15A]/20 bg-[#C4A15A]/10 px-3 py-2.5">
+            <p className="text-xs font-semibold text-[#C4A15A]">⚡ AI active</p>
+            <p className="mt-1 text-[11px] text-[#9C8E76]">
               Auto-responding to new leads
             </p>
           </div>
+          <p className="mt-2 px-1 text-[10px] leading-snug text-[#9C8E76]">
+            Demo only — all patient data is fictional.
+          </p>
         </div>
       </aside>
 
@@ -106,7 +109,7 @@ export default function DashboardPage() {
       <div className="flex-1">
         <div className="flex items-center justify-between border-b border-[#F0EDE8] bg-[#FAFAF8] px-8 py-5">
           <div>
-            <h1 className="text-xl font-bold text-neutral-900">Dashboard</h1>
+            <h1 className="text-xl font-bold text-neutral-900 [font-family:var(--font-playfair)]">Dashboard</h1>
             <p className="mt-0.5 text-sm text-neutral-500">Speed-to-lead AI · real-time overview</p>
           </div>
           <button
@@ -144,7 +147,7 @@ export default function DashboardPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or phone..."
-              className="flex-1 min-w-[200px] rounded-lg border border-neutral-300 bg-white px-3.5 py-2 text-sm outline-none focus:border-[#378ADD] focus:ring-2 focus:ring-[#378ADD]/20"
+              className="flex-1 min-w-[200px] rounded-lg border border-neutral-300 bg-white px-3.5 py-2 text-sm outline-none focus:border-[#C4A15A] focus:ring-2 focus:ring-[#C4A15A]/20"
             />
             <div className="flex gap-1 rounded-lg border border-neutral-200 bg-white p-1">
               {FILTERS.map((f) => (
@@ -153,7 +156,7 @@ export default function DashboardPage() {
                   onClick={() => setFilter(f.value)}
                   className={`rounded-md px-3 py-1.5 text-sm font-medium transition ${
                     filter === f.value
-                      ? "bg-[#0B1120] text-white"
+                      ? "bg-[#1C1710] text-white"
                       : "text-neutral-500 hover:bg-neutral-50"
                   }`}
                 >
