@@ -26,6 +26,7 @@ import db from '@/lib/db/client';
 import { scoreLead } from '@/lib/scoring/calculate';
 import { qualifyLead } from '@/lib/ai/qualify';
 import { logSMS } from '@/lib/sms/send';
+import { isValidName, isValidPhone, isValidEmail, isValidTravelCity } from '@/lib/validation/lead';
 import type { Lead, ProcedureCategory, SurgicalInterest, NonSurgicalInterest } from '@/types';
 
 /**
@@ -44,7 +45,7 @@ import type { Lead, ProcedureCategory, SurgicalInterest, NonSurgicalInterest } f
 const SURGICAL_INTERESTS: SurgicalInterest[] = [
   'breast-augmentation', 'breast-lift', 'breast-reduction', 'breast-revision',
   'tummy-tuck', 'liposuction', 'bbl', 'facelift', 'eyelid-surgery',
-  'rhinoplasty', 'body-contouring', 'other-surgical',
+  'rhinoplasty', 'body-contouring', 'revision-surgery', 'other-surgical',
 ];
 
 const NON_SURGICAL_INTERESTS: NonSurgicalInterest[] = [
@@ -66,16 +67,53 @@ export async function POST(request: NextRequest) {
     // ───────────────────────────────────────────────────────────────────
     // STEP 1: Parse the request body
     // ───────────────────────────────────────────────────────────────────
-    const body = await request.json();
+    // Malformed JSON is the caller's mistake, not ours — that's a 400,
+    // not a 500 from the catch-all below.
+    let body: any;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: 'Request body must be valid JSON' }, { status: 400 });
+    }
 
     // ───────────────────────────────────────────────────────────────────
     // STEP 2: Validate
     // ───────────────────────────────────────────────────────────────────
-    if (!body.name || typeof body.name !== 'string' || body.name.trim().length === 0) {
-      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
+    // These rules mirror the LeadForm client-side checks (both import from
+    // lib/validation/lead), but the API enforces them independently because
+    // it can be called directly without the form. Nothing below this block
+    // (scoring, AI qualification, SMS logging) runs for a rejected lead.
+    if (!body.name || typeof body.name !== 'string' || !isValidName(body.name)) {
+      return NextResponse.json(
+        { error: 'Invalid name: must be at least 2 characters and contain letters' },
+        { status: 400 }
+      );
     }
-    if (!body.phone || typeof body.phone !== 'string' || body.phone.trim().length === 0) {
-      return NextResponse.json({ error: 'Phone is required' }, { status: 400 });
+    if (body.name.trim().length > 100) {
+      return NextResponse.json({ error: 'Invalid name: must be 100 characters or fewer' }, { status: 400 });
+    }
+    if (!body.phone || typeof body.phone !== 'string' || !isValidPhone(body.phone)) {
+      return NextResponse.json(
+        { error: 'Invalid phone: must be a 10-digit US phone number' },
+        { status: 400 }
+      );
+    }
+    // Email is optional — validate only when provided. An empty string is
+    // treated as "not provided" so it stores as NULL, not "".
+    const email: string | undefined =
+      body.email === undefined || body.email === null || (typeof body.email === 'string' && body.email.trim() === '')
+        ? undefined
+        : body.email;
+    if (email !== undefined && (typeof email !== 'string' || !isValidEmail(email))) {
+      return NextResponse.json({ error: 'Invalid email: must be a valid email address' }, { status: 400 });
+    }
+    if (body.notes !== undefined && body.notes !== null) {
+      if (typeof body.notes !== 'string' || body.notes.length > 2000) {
+        return NextResponse.json(
+          { error: 'Invalid notes: must be text of 2000 characters or fewer' },
+          { status: 400 }
+        );
+      }
     }
     if (!body.procedure_category || !['surgical', 'non-surgical'].includes(body.procedure_category)) {
       return NextResponse.json({ error: 'Valid procedure_category is required' }, { status: 400 });
@@ -98,8 +136,16 @@ export async function POST(request: NextRequest) {
     if (!body.consultation_preference || !['in-person', 'virtual'].includes(body.consultation_preference)) {
       return NextResponse.json({ error: 'Valid consultation_preference is required' }, { status: 400 });
     }
-    if (body.patient_location === 'out-of-town' && !body.travel_origin_city) {
-      return NextResponse.json({ error: 'travel_origin_city is required for out-of-town leads' }, { status: 400 });
+    if (body.patient_location === 'out-of-town') {
+      if (!body.travel_origin_city || typeof body.travel_origin_city !== 'string') {
+        return NextResponse.json({ error: 'travel_origin_city is required for out-of-town leads' }, { status: 400 });
+      }
+      if (!isValidTravelCity(body.travel_origin_city) || body.travel_origin_city.trim().length > 100) {
+        return NextResponse.json(
+          { error: 'Invalid travel_origin_city: must contain letters and be 100 characters or fewer' },
+          { status: 400 }
+        );
+      }
     }
 
     // ───────────────────────────────────────────────────────────────────
@@ -109,7 +155,7 @@ export async function POST(request: NextRequest) {
       id: uuidv4(),
       name: body.name.trim(),
       phone: body.phone.trim(),
-      email: body.email?.trim(),
+      email: email?.trim(),
       procedure_category: body.procedure_category,
       specific_interest: body.specific_interest,
       timeline: body.timeline,

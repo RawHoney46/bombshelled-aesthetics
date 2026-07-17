@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { apiFetch } from "@/lib/api";
+import { isValidName, isValidPhone, isValidEmail, isValidTravelCity } from "@/lib/validation/lead";
 import type { Lead, ProcedureCategory, SurgicalInterest, NonSurgicalInterest, SpecificInterest } from "@/types";
 
 const SURGICAL_INTERESTS: SurgicalInterest[] = [
@@ -78,8 +79,28 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
       return;
     }
 
+    if (!isValidName(name)) {
+      setError("Please enter a valid name.");
+      return;
+    }
+
+    if (!isValidPhone(phone)) {
+      setError("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
+    if (email.trim() && !isValidEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     if (patientLocation === "out-of-town" && !travelOriginCity.trim()) {
       setError("Please enter your city of origin.");
+      return;
+    }
+
+    if (patientLocation === "out-of-town" && !isValidTravelCity(travelOriginCity)) {
+      setError("Please enter a valid city name.");
       return;
     }
 
@@ -138,8 +159,11 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
     );
   }
 
+  // noValidate: we show validation errors in our own banner instead of the
+  // browser's native bubbles (type="email"/"tel" still give mobile users the
+  // right keyboard).
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-[#EEEBE5] bg-white p-6">
+    <form onSubmit={handleSubmit} noValidate className="rounded-xl border border-[#EEEBE5] bg-white p-6">
       {error && (
         <div className="mb-4 rounded-lg border border-[#F09595] bg-[#FCEBEB] px-4 py-2.5 text-sm text-[#A32D2D]">
           {error}
@@ -160,6 +184,8 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
         <div>
           <label className="mb-1 block text-xs font-semibold text-neutral-600">Phone *</label>
           <input
+            type="tel"
+            inputMode="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="(214) 555-0000"
@@ -170,6 +196,8 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
         <div>
           <label className="mb-1 block text-xs font-semibold text-neutral-600">Email</label>
           <input
+            type="email"
+            inputMode="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="jane@email.com"
